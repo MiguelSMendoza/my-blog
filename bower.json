@@ -1,0 +1,18 @@
+{
+  "name": "my-blog",
+  "description": "Un blog desarrollado en Angular JS",
+  "main": "index.js",
+  "authors": [
+    "Miguel S. Mendoza <miguel@smendoza.net>"
+  ],
+  "license": "GPL-3.0",
+  "homepage": "https://github.com/MiguelSMendoza/my-blog",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "name": "my-blog",
+  "version": "1.0.0",
+  "description": "Un blog desarrollado en Angular JS",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MiguelSMendoza/my-blog.git"
+  },
+  "author": "Miguel S. Mendoza <miguel@smendoza.net>",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/MiguelSMendoza/my-blog/issues"
+  },
+  "homepage": "https://github.com/MiguelSMendoza/my-blog#readme",
+  "dependencies": {
+    "express": "^4.14.0"
+  }
+}
