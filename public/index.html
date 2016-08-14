@@ -1,14 +1,80 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="es">
 	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>My Blog</title>
-		<link rel="stylesheet" type="text/css" href="public/css/styles.css" />
+		<link rel="stylesheet" type="text/css" href="vendor/bootstrap/dist/css/bootstrap.css" />
+		<link rel="stylesheet" type="text/css" href="vendor/bootstrap/dist/css/bootstrap-theme.css" />
+		<link rel="stylesheet" type="text/css" href="css/styles.css" />
 	</head>
 	
 	<body>
-		<h1>My Blog</h1>
-		<p>Bienvenido a mi Blog</p>
-		<script type="text/javascript" src="public/js/app.js"></script>
+		<div class="container">
+			<div class="blog-header" name="top">
+				<h1 class="blog-title">My Blog</h1>
+				<p class="lead blog-description">Bienvenido a mi Blog</p>
+			</div>
+			<div class="row">
+				<div class="col-sm-8 blog-main">
+					<div class="blog-post">
+						<h2 class="blog-post-title">Sample blog post</h2>
+						<p class="blog-post-meta">January 1, 2014 by <a href="#">Mark</a></p>
+						<p>This blog post shows a few different types of content that's supported and styled with Bootstrap. Basic typography, images, and code are all supported.</p>
+					</div><!-- /.blog-post -->
+					<div class="blog-post">
+            <h2 class="blog-post-title">New feature</h2>
+            <p class="blog-post-meta">December 14, 2013 by <a href="#">Chris</a></p>
+
+            <p>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aenean lacinia bibendum nulla sed consectetur. Etiam porta sem malesuada magna mollis euismod. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+            <ul>
+              <li>Praesent commodo cursus magna, vel scelerisque nisl consectetur et.</li>
+              <li>Donec id elit non mi porta gravida at eget metus.</li>
+              <li>Nulla vitae elit libero, a pharetra augue.</li>
+            </ul>
+            <p>Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
+            <p>Donec ullamcorper nulla non metus auctor fringilla. Nulla vitae elit libero, a pharetra augue.</p>
+          </div><!-- /.blog-post -->
+          <nav>
+            <ul class="pager">
+              <li><a href="#">Anterior</a></li>
+              <li><a href="#">Siguiente</a></li>
+            </ul>
+          </nav>
+				</div><!--.blog-main-->
+				<div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+          <div class="sidebar-module sidebar-module-inset">
+            <h4>About</h4>
+            <p>Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
+          </div>
+          <div class="sidebar-module">
+            <h4>Archives</h4>
+            <ol class="list-unstyled">
+              <li><a href="#">March 2014</a></li>
+              <li><a href="#">February 2014</a></li>
+            </ol>
+          </div>
+          <div class="sidebar-module">
+            <h4>Elsewhere</h4>
+            <ol class="list-unstyled">
+              <li><a href="#">GitHub</a></li>
+              <li><a href="#">Twitter</a></li>
+              <li><a href="#">Facebook</a></li>
+            </ol>
+          </div>
+        </div><!-- /.blog-sidebar -->
+			</div><!--.row-->
+		</div><!--.container-->
+		<footer class="blog-footer">
+      <p>Blog desarrollado en Angular JS y Bootstrap.</p>
+      <p>
+        <a href="#top">Back to top</a>
+      </p>
+    </footer>
+		<script type="text/javascript" src="vendor/jquery/dist/jquery.min.js"></script>
+		<script type="text/javascript" src="vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="js/app.js"></script>
 	</body>
 
 </html>
