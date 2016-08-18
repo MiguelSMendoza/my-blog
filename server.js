@@ -1,5 +1,6 @@
 'use strict';
 var express = require('express');
+var bodyParser = require("body-parser");
 var app = express();
 app.get('/', function(req, res) {
 	res.sendFile('public/index.html', {
@@ -10,6 +11,13 @@ app.get('/admin', function(req, res) {
 	res.sendFile('admin/index.html', {
 		root: __dirname
 	});
+});
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
+app.use(bodyParser.json());
+app.post('/news', function(req, res) {
+	res.send({"status":req.body});
 });
 app.get('/news', function(req, res) {
 	res.setHeader('Content-Type', 'application/json');
