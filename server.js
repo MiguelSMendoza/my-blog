@@ -6,6 +6,11 @@ app.get('/', function(req, res) {
 		root: __dirname
 	});
 });
+app.get('/admin', function(req, res) {
+	res.sendFile('admin/index.html', {
+		root: __dirname
+	});
+});
 app.get('/news', function(req, res) {
 	res.setHeader('Content-Type', 'application/json');
 	res.send({
@@ -22,6 +27,7 @@ app.get('/news', function(req, res) {
 		}]
 	});
 });
+app.use('/admin', express.static(__dirname + '/admin'));
 app.use('/js', express.static(__dirname + '/public/js'));
 app.use('/css', express.static(__dirname + '/public/css'));
 app.use('/vendor', express.static(__dirname + '/bower_components'));
