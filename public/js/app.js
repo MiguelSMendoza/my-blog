@@ -1,6 +1,6 @@
 'use strict';
 (function() {
-	var blog = angular.module('blog', []);
+	var blog = angular.module('blog', ['ngSanitize']);
 	blog.service('NewsService', NewsService);
 	blog.controller('NewsController', NewsController);
 
@@ -33,7 +33,7 @@
 						var year = date.getFullYear();
 						news[i].date = months[monthIndex]+ ' '+ day + ', '+year;
 						
-						news[i].content = $sce.trustAsHtml(news[i].content);
+						//news[i].content = $sce.trustAsHtml(news[i].content);
 					}
 					$scope.news = news;
 				});

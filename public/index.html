@@ -10,7 +10,7 @@
 		<link rel="stylesheet" type="text/css" href="css/styles.css" />
 	</head>
 	
-	<body ng-controller="NewsController" ng-cloak>
+	<body ng-controller="NewsController">
 		<div class="container">
 			<div class="blog-header" name="top">
 				<h1 class="blog-title">My Blog</h1>
@@ -18,7 +18,7 @@
 			</div>
 			<div class="row">
 				<div class="col-sm-8 blog-main">
-					<div class="blog-post" ng-repeat="new in news">
+					<div class="blog-post" ng-repeat="new in news" ng-cloak>
 						<h2 class="blog-post-title">{{new.title}}</h2>
 						<p class="blog-post-meta">{{new.date}} by <a href="#">{{new.author}}</a></p>
 						<div ng-bind-html="new.content"></div>
@@ -62,6 +62,7 @@
 		<script type="text/javascript" src="vendor/jquery/dist/jquery.min.js"></script>
 		<script type="text/javascript" src="vendor/bootstrap/dist/js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="vendor/angular/angular.js"></script>
+		<script type="text/javascript" src="vendor/angular-sanitize/angular-sanitize.min.js"></script>
 		<script type="text/javascript" src="js/app.js"></script>
 	</body>
 
