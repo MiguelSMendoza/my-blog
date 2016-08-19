@@ -1,0 +1,18 @@
+<h1 class="page-header">Nueva Entrada</h1>
+
+<div class="row" >
+	<form id="newEntry" ng-submit="newEntry()">
+		<div class="form-group">
+			<label for="formGroupExampleInput">Título</label>
+			<input type="text" class="form-control" id="title" ng-model="title" placeholder="Escriba el título">
+		</div>
+		<div class="form-group">
+			<text-angular id="htmlContent" ng-model="htmlContent"></text-angular>
+		</div>
+		<div class="form-group row">
+			<div class="offset-sm-2 col-sm-10">
+				<button type="submit" class="btn btn-primary">Guardar</button>
+			</div>
+		</div>
+	</form>
+</div>

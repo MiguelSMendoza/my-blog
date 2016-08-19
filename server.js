@@ -17,7 +17,7 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 app.post('/news', function(req, res) {
-	res.send({"status":req.body});
+	res.send(req.body);
 });
 app.get('/news', function(req, res) {
 	res.setHeader('Content-Type', 'application/json');
