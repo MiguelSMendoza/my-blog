@@ -1,7 +1,7 @@
 'use strict';
 (function() {
 	var blog = angular.module('admin', ['textAngular', 'ngRoute']);
-	blog.service('NewsService', NewsService);
+	blog.service('EntriesService', EntriesService);
 	blog.controller('EditController', EditController);
 	blog.controller('MainController', MainController);
 	
@@ -17,19 +17,19 @@
 		});
 	});
 
-	function NewsService($http, $q) {
-		this.getNews = function() {
+	function EntriesService($http, $q) {
+		this.getEntries = function() {
 			var defered = $q.defer();
 			var promise = defered.promise;
-			$http.get('/news').then(function(res) {
-				defered.resolve(res.data.news);
+			$http.get('/api/entries').then(function(res) {
+				defered.resolve(res.data);
 			});
 			return promise;
 		};
-		this.saveNew = function(data) {
+		this.saveEntry = function(data) {
 			var defered = $q.defer();
 			var promise = defered.promise;
-			$http.post('/news', data).then(function(res) {
+			$http.post('/api/entries', data).then(function(res) {
 				defered.resolve(res.data);
 			});
 			return promise;
@@ -40,7 +40,7 @@
 		$scope.message = "Bienvenido a la Zona de Administración";
 	}
 
-	function EditController($scope, NewsService) {
+	function EditController($scope, EntriesService) {
 		$scope.newEntry = function() {
 			var entry = {
 				"title": $scope.title,
@@ -48,8 +48,12 @@
 				"author": "Miguel S. Mendoza",
 				"date": (new Date).getTime()
 			};
-			NewsService.saveNew(entry).then(function(data) {
-				console.log(data);
+			EntriesService.saveEntry(entry).then(function(data) {
+				if(data!==undefined) {
+					toastr.success('Entrada almacenada correctamente.', 'Guardado');
+				} else {
+					toastr.error('Ha ocurrido un error guardando la noticia.', 'Error');
+				}
 			});
 		};
 	}

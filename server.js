@@ -1,7 +1,24 @@
 'use strict';
 var express = require('express');
 var bodyParser = require("body-parser");
+var mongoose = require('mongoose');
 var app = express();
+app.use(bodyParser.urlencoded({
+	extended: true
+}));
+app.use(bodyParser.json());
+mongoose.connect('mongodb://localhost:27017/blog');
+app.use('/admin', express.static(__dirname + '/admin'));
+app.use('/js', express.static(__dirname + '/public/js'));
+app.use('/css', express.static(__dirname + '/public/css'));
+app.use('/vendor', express.static(__dirname + '/bower_components'));
+var entrySchema = new mongoose.Schema({
+	title: String,
+	content: String,
+	author: String,
+	date: Number
+});
+var Entry = mongoose.model('Entry', entrySchema);
 app.get('/', function(req, res) {
 	res.sendFile('public/index.html', {
 		root: __dirname
@@ -12,33 +29,25 @@ app.get('/admin', function(req, res) {
 		root: __dirname
 	});
 });
-app.use(bodyParser.urlencoded({
-    extended: true
-}));
-app.use(bodyParser.json());
-app.post('/news', function(req, res) {
-	res.send(req.body);
+app.post('/api/entries', function(req, res) {
+	var body = req.body;
+	var newEntry = new Entry({
+		title: body.title,
+		content: body.content,
+		author: body.author,
+		date: body.date
+	});
+	newEntry.save(function(err) {
+		if (err) return handleError(err);
+		res.json(newEntry);
+	})
 });
-app.get('/news', function(req, res) {
-	res.setHeader('Content-Type', 'application/json');
-	res.send({
-		"news": [{
-			"title": "Sample blog post",
-			"content": "<p>This blog post shows a few different types of content that's supported and styled with Bootstrap. Basic typography, images, and code are all supported.</p>",
-			"author": "Mark",
-			"date": "1388595869"
-		}, {
-			"title": "New feature",
-			"content": "<p>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aenean lacinia bibendum nulla sed consectetur. Etiam porta sem malesuada magna mollis euismod. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p><ul><li>Praesent commodo cursus magna, vel scelerisque nisl consectetur et.</li><li>Donec id elit non mi porta gravida at eget metus.</li><li>Nulla vitae elit libero, a pharetra augue.</li></ul><p>Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.</p><p>Donec ullamcorper nulla non metus auctor fringilla. Nulla vitae elit libero, a pharetra augue.</p>",
-			"author": "Chris",
-			"date": "1387040669"
-		}]
+app.get('/api/entries', function(req, res) {
+	Entry.find(function(err, entries) {
+		if (err) return handleError(err);
+		res.json(entries);
 	});
 });
-app.use('/admin', express.static(__dirname + '/admin'));
-app.use('/js', express.static(__dirname + '/public/js'));
-app.use('/css', express.static(__dirname + '/public/css'));
-app.use('/vendor', express.static(__dirname + '/bower_components'));
 var port = 8080;
 app.listen(port, function() {
 	console.log('Listening on port ' + port + '...');

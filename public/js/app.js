@@ -8,8 +8,8 @@
 		this.getNews = function() {
 			var defered = $q.defer();
 			var promise = defered.promise;
-			$http.get('/news').then(function(res) {
-				defered.resolve(res.data.news);
+			$http.get('/api/entries').then(function(res) {
+				defered.resolve(res.data);
 			});
 			return promise;
 		}
@@ -27,7 +27,7 @@
 					var news = [];
 					for(var i=0;i<data.length;i++) {
 						news[i] = data[i];
-						var date = new Date(parseInt(news[i].date)*1000);
+						var date = new Date(parseInt(news[i].date));
 						var day = date.getDate();
 						var monthIndex = date.getMonth();
 						var year = date.getFullYear();
