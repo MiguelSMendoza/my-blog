@@ -1,10 +1,10 @@
 'use strict';
 (function() {
 	var blog = angular.module('blog', ['ngSanitize']);
-	blog.service('NewsService', NewsService);
-	blog.controller('NewsController', NewsController);
+	blog.service('EntriesService', EntriesService);
+	blog.controller('EntriesController', EntriesController);
 
-	function NewsService($http, $q) {
+	function EntriesService($http, $q) {
 		this.getNews = function() {
 			var defered = $q.defer();
 			var promise = defered.promise;
@@ -15,7 +15,7 @@
 		}
 	}
 
-	function NewsController($scope, $sce, NewsService) {
+	function EntriesController($scope, EntriesService) {
 		var months = [
 		  "Enero", "Febrero", "Marzo",
 		  "Abril", "Mayo", "Junio", "Julio",
@@ -23,7 +23,7 @@
 		  "Noviembre", "Diciembre"
 		];
 		var loadNews = function() {
-				NewsService.getNews().then(function(data) {
+				EntriesService.getNews().then(function(data) {
 					var news = [];
 					for(var i=0;i<data.length;i++) {
 						news[i] = data[i];
@@ -31,9 +31,7 @@
 						var day = date.getDate();
 						var monthIndex = date.getMonth();
 						var year = date.getFullYear();
-						news[i].date = months[monthIndex]+ ' '+ day + ', '+year;
-						
-						//news[i].content = $sce.trustAsHtml(news[i].content);
+						news[i].date = day + ' de ' + months[monthIndex] + ', '+year;
 					}
 					$scope.news = news;
 				});

@@ -10,7 +10,7 @@
 		<link rel="stylesheet" type="text/css" href="css/styles.css" />
 	</head>
 	
-	<body ng-controller="NewsController">
+	<body ng-controller="EntriesController">
 		<div class="container">
 			<div class="blog-header" name="top">
 				<h1 class="blog-title">My Blog</h1>
@@ -20,7 +20,7 @@
 				<div class="col-sm-8 blog-main">
 					<div class="blog-post" ng-repeat="new in news" ng-cloak>
 						<h2 class="blog-post-title">{{new.title}}</h2>
-						<p class="blog-post-meta">{{new.date}} by <a href="#">{{new.author}}</a></p>
+						<p class="blog-post-meta">{{new.date}}</p>
 						<div ng-bind-html="new.content"></div>
 					</div><!-- /.blog-post -->
           <nav>

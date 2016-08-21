@@ -37,15 +37,30 @@ app.post('/api/entries', function(req, res) {
 		author: body.author,
 		date: body.date
 	});
-	newEntry.save(function(err) {
-		if (err) return handleError(err);
-		res.json(newEntry);
-	})
+	if(body.idEntry === 0) {
+		newEntry.save(function(err) {
+			if (err) return handleError(err);
+			res.json(newEntry);
+		});
+	} else {
+		var query = { '_id':body.idEntry };
+		newEntry._id = body.idEntry;
+		Entry.findOneAndUpdate(query, newEntry, {upsert:true}, function(err, doc){
+		    if (err) return handleError(err);
+		    return res.send(newEntry);
+		});
+	}
 });
 app.get('/api/entries', function(req, res) {
 	Entry.find(function(err, entries) {
 		if (err) return handleError(err);
 		res.json(entries);
+	});
+});
+app.get('/api/entries/:idEntry', function(req, res) {
+	Entry.findById(req.params.idEntry, function (err, entry) { 
+		if (err) return handleError(err);
+		res.json(entry);
 	});
 });
 var port = 8080;
