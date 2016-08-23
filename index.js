@@ -29,6 +29,11 @@ app.get('/admin', function(req, res) {
 		root: __dirname
 	});
 });
+app.get('/admin/login', function(req, res) {
+	res.sendFile('admin/login.html', {
+		root: __dirname
+	});
+});
 app.post('/api/entries', function(req, res) {
 	var body = req.body;
 	var newEntry = new Entry({
