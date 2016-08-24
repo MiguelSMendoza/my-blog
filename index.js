@@ -19,6 +19,11 @@ var entrySchema = new mongoose.Schema({
 	date: Number
 });
 var Entry = mongoose.model('Entry', entrySchema);
+var userSchema = new mongoose.Schema({
+	email: String,
+	password: String
+});
+var User = mongoose.model('User', userSchema);
 app.get('/', function(req, res) {
 	res.sendFile('public/index.html', {
 		root: __dirname

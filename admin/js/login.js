@@ -1,21 +1,35 @@
 'use strict';
 (function() {
-	var blog = angular.module('login', []);
-	blog.service('LoginService', LoginService);
-	blog.controller('LoginController', LoginController);
+	var login = angular.module('admin', ['satellizer']]);
+	login.service('LoginService', LoginService);
+	login.controller('LoginController', LoginController);
+	
+	login.config(function($authProvider) {
+        // Parametros de configuración
+        $authProvider.loginUrl = "http://localhost:8080/auth/login";
+        $authProvider.tokenName = "token";
+        $authProvider.tokenPrefix = "SMendoza",
+    });
 
-	function LoginService($http, $q) {
-		this.getNews = function() {
-			var defered = $q.defer();
-			var promise = defered.promise;
-			$http.get('/api/entries').then(function(res) {
-				defered.resolve(res.data);
-			});
-			return promise;
-		}
+	function LoginController($scope, $auth, $location) {  
+	    this.login = function(){
+	        $auth.login({
+	            email: $scope.email,
+	            password: $scope.password
+	        })
+	        .then(function(){
+	            $location.path("/admin")
+	        })
+	        .catch(function(response){
+	            // Si ha habido errores llegamos a esta parte
+	        });
+	    }
 	}
-
-	function LoginController($scope, EntriesService) {
-
+	
+	function LogoutController($auth, $location) {  
+	    $auth.logout()
+	        .then(function() {
+	            $location.path("/")
+	        });
 	}
 })();
