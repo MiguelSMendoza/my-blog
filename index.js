@@ -29,6 +29,16 @@ app.get('/', function(req, res) {
 		root: __dirname
 	});
 });
+app.post('/auth/login', function(req, res) {  
+    User.findOne({email: req.body.email.toLowerCase()}, function(err, user) {
+    if(err || !user) {
+	    return res.status(401).send("Invalid Login");
+    }
+    
+    return res
+        .status(200)
+        .send({token: service.createToken(user)});
+});
 app.get('/admin', function(req, res) {
 	res.sendFile('admin/index.html', {
 		root: __dirname
