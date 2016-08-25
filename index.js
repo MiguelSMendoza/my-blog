@@ -26,7 +26,13 @@ var userSchema = new mongoose.Schema({
 	password: String
 });
 var User = mongoose.model('User', userSchema);
-
+/*var newUser = new User({
+	email: "-",
+	pass: "-"
+});
+newUser.save(function(err) {
+	console.log("Pollote");
+});*/
 app.get('/', function(req, res) {
 	res.sendFile('public/index.html', {
 		root: __dirname
