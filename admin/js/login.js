@@ -10,14 +10,16 @@
         $authProvider.tokenPrefix = "SMendoza";
     });
 
-	function LoginController($scope, $auth, $location) {  
+	function LoginController($scope, $auth) {  
 	    $scope.login = function(){
 	        $auth.login({
 	            email: $scope.email,
 	            password: $scope.password
 	        })
 	        .then(function(){
-	            $location.path("/admin")
+		        var url = window.location.href;
+		        var arr = url.split("/");
+	            window.location.replace(arr[0]+"/admin");
 	        })
 	        .catch(function(response){
 	            console.log(response);

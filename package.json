@@ -17,7 +17,9 @@
   },
   "homepage": "https://github.com/MiguelSMendoza/my-blog#readme",
   "dependencies": {
+    "bcrypt": "^0.8.7",
     "body-parser": "^1.15.2",
+    "cors": "^2.8.0",
     "dotenv": "^2.0.0",
     "express": "^4.14.0",
     "jwt-simple": "^0.5.0",

@@ -3,17 +3,21 @@ require('dotenv').config();
 var express = require('express');
 var bodyParser = require("body-parser");
 var mongoose = require('mongoose');
-
+var bcrypt = require('bcrypt');
+var cors = require('cors'); 
 var app = express();
+var router = express.Router();
 app.use(bodyParser.urlencoded({
 	extended: true
 }));
 app.use(bodyParser.json());
 mongoose.connect('mongodb://localhost:27017/blog');
-app.use('/admin', express.static(__dirname + '/admin'));
+var middleware = require('./app/auth/middleware');
+app.use('/admin', middleware.ensureAuthenticated, express.static(__dirname + '/admin'));
 app.use('/js', express.static(__dirname + '/public/js'));
 app.use('/css', express.static(__dirname + '/public/css'));
 app.use('/vendor', express.static(__dirname + '/bower_components'));
+app.use(cors());  
 var entrySchema = new mongoose.Schema({
 	title: String,
 	content: String,
@@ -26,13 +30,18 @@ var userSchema = new mongoose.Schema({
 	password: String
 });
 var User = mongoose.model('User', userSchema);
-/*var newUser = new User({
-	email: "-",
-	pass: "-"
-});
-newUser.save(function(err) {
-	console.log("Pollote");
+
+/*bcrypt.hash('password', 5, function( err, bcryptedPassword) {
+	if(err) handleError(err);
+   var newUser = new User({
+		email: "mail",
+		password: bcryptedPassword
+	});
+	newUser.save(function(err) {
+		console.log("Pollote");
+	});
 });*/
+
 app.get('/', function(req, res) {
 	res.sendFile('public/index.html', {
 		root: __dirname
@@ -40,12 +49,14 @@ app.get('/', function(req, res) {
 });
 var auth = require('./app/auth/auth');
 app.post('/auth/login', auth.emailLogin);
-app.get('/admin', function(req, res) {
+
+router.get('/admin', middleware.ensureAuthenticated, function(req, res) {
 	res.sendFile('admin/index.html', {
 		root: __dirname
 	});
 });
-app.get('/admin/login', function(req, res) {
+
+app.get('/login', function(req, res) {
 	res.sendFile('admin/login.html', {
 		root: __dirname
 	});
