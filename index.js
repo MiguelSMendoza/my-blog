@@ -1,7 +1,9 @@
 'use strict';
+require('dotenv').config();
 var express = require('express');
 var bodyParser = require("body-parser");
 var mongoose = require('mongoose');
+
 var app = express();
 app.use(bodyParser.urlencoded({
 	extended: true
@@ -24,21 +26,14 @@ var userSchema = new mongoose.Schema({
 	password: String
 });
 var User = mongoose.model('User', userSchema);
+
 app.get('/', function(req, res) {
 	res.sendFile('public/index.html', {
 		root: __dirname
 	});
 });
-app.post('/auth/login', function(req, res) {  
-    User.findOne({email: req.body.email.toLowerCase()}, function(err, user) {
-    if(err || !user) {
-	    return res.status(401).send("Invalid Login");
-    }
-    
-    return res
-        .status(200)
-        .send({token: service.createToken(user)});
-});
+var auth = require('./app/auth/auth');
+app.post('/auth/login', auth.emailLogin);
 app.get('/admin', function(req, res) {
 	res.sendFile('admin/index.html', {
 		root: __dirname

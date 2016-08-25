@@ -18,7 +18,10 @@
   "homepage": "https://github.com/MiguelSMendoza/my-blog#readme",
   "dependencies": {
     "body-parser": "^1.15.2",
+    "dotenv": "^2.0.0",
     "express": "^4.14.0",
+    "jwt-simple": "^0.5.0",
+    "moment": "^2.14.1",
     "mongoose": "^4.5.9"
   }
 }

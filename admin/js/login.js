@@ -1,18 +1,17 @@
-'use strict';
 (function() {
-	var login = angular.module('admin', ['satellizer']]);
-	login.service('LoginService', LoginService);
+	'use strict';
+	var login = angular.module('admin', ['satellizer']);
 	login.controller('LoginController', LoginController);
+	login.controller('LogoutController', LogoutController);
 	
 	login.config(function($authProvider) {
-        // Parametros de configuración
         $authProvider.loginUrl = "http://localhost:8080/auth/login";
         $authProvider.tokenName = "token";
-        $authProvider.tokenPrefix = "SMendoza",
+        $authProvider.tokenPrefix = "SMendoza";
     });
 
 	function LoginController($scope, $auth, $location) {  
-	    this.login = function(){
+	    $scope.login = function(){
 	        $auth.login({
 	            email: $scope.email,
 	            password: $scope.password
@@ -21,7 +20,7 @@
 	            $location.path("/admin")
 	        })
 	        .catch(function(response){
-	            // Si ha habido errores llegamos a esta parte
+	            console.log(response);
 	        });
 	    }
 	}
