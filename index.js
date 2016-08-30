@@ -13,10 +13,10 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 mongoose.connect(process.env.MONGODB_URI);
 var middleware = require('./app/auth/middleware');
-app.use('/admin', middleware.ensureAuthenticated, express.static(__dirname + '/admin'));
-app.use('/js', express.static(__dirname + '/public/js'));
-app.use('/css', express.static(__dirname + '/public/css'));
-app.use('/vendor', express.static(__dirname + '/bower_components'));
+app.use('/admin', middleware.ensureAuthenticated, express.static(path.join(__dirname, '/admin')));
+app.use('/js', express.static(path.join(__dirname, '/public/js')));
+app.use('/css', express.static(path.join(__dirname, '/public/css')));
+app.use('/vendor', express.static(path.join(__dirname, '/bower_components')));
 app.use(cors());  
 var entrySchema = new mongoose.Schema({
 	title: String,
