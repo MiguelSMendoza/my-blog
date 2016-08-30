@@ -11,7 +11,7 @@ app.use(bodyParser.urlencoded({
 	extended: true
 }));
 app.use(bodyParser.json());
-mongoose.connect('mongodb://localhost:27017/blog');
+mongoose.connect(process.env.MONGODB_URI);
 var middleware = require('./app/auth/middleware');
 app.use('/admin', middleware.ensureAuthenticated, express.static(__dirname + '/admin'));
 app.use('/js', express.static(__dirname + '/public/js'));
