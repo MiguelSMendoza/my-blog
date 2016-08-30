@@ -1,6 +1,6 @@
 'use strict';
 (function() {
-	var blog = angular.module('private', ['textAngular', 'ngRoute']);
+	var blog = angular.module('private', ['textAngular', 'ngRoute', 'oc.lazyLoad']);
 	blog.service('EntriesService', EntriesService);
 	blog.controller('EditController', EditController);
 	blog.controller('EntriesController', EntriesController);
