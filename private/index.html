@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html ng-app="admin" lang="es">
 	<head>
-		<base href="/private">
+		<base href="/admin">
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,64 +11,23 @@
 		<link rel='stylesheet' type="text/css" href="bower_components/font-awesome/css/font-awesome.min.css">
 		<link rel='stylesheet' type="text/css" href="bower_components/textAngular/dist/textAngular.css">
 		<link rel='stylesheet' type="text/css" href="bower_components/toastr/toastr.min.css">
-		<link rel="stylesheet" type="text/css" href="private/css/styles.css" />
+		<link rel="stylesheet" type="text/css" href="public/css/login.css" />
 	</head>
 	
-	<body ng-controller="MainController">
-		    <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container-fluid">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#">Project name</a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="#">Dashboard</a></li>
-            <li><a href="#">Settings</a></li>
-            <li><a href="#">Profile</a></li>
-            <li><a href="#">Help</a></li>
-          </ul>
-          <form class="navbar-form navbar-right">
-            <input type="text" class="form-control" placeholder="Search...">
-          </form>
-        </div>
-      </div>
-    </nav>
-
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-sm-3 col-md-2 sidebar">
-          <ul class="nav nav-sidebar">
-            <li>
-                <a href="#/"><i class="fa fa-home"></i> <span class="nav-label">Inicio</span></a>
-            </li>
-            <li>
-                <a href="#edit"><i class="fa fa-pencil-square-o"></i> <span class="nav-label">Nueva Entrada</span></a>
-            </li>
-            <li>
-                <a href="#entries"><i class="fa fa-list"></i> <span class="nav-label">Entradas</span></a>
-            </li>
-          </ul>
-        </div>
-        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <div ng-view></div>
-        </div>
-      </div>
-    </div>
+	<body>
+          <div ui-view></div>
 		<script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
 		<script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="bower_components/angular/angular.js"></script>
-		<script type="text/javascript" src="bower_components/angular-route/angular-route.min.js"></script>
+		<script type="text/javascript" src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
 		<script type="text/javascript" src="bower_components/toastr/toastr.min.js"></script>
 		<script type="text/javascript" src="bower_components/textAngular/dist/textAngular-rangy.min.js"></script>
 		<script type="text/javascript" src="bower_components/textAngular/dist/textAngular-sanitize.min.js"></script>
 		<script type="text/javascript" src="bower_components/textAngular/dist/textAngular.min.js"></script>
-		<script type="text/javascript" src="private/js/app.js"></script>
+		<script type="text/javascript" src="bower_components/satellizer/dist/satellizer.min.js"></script>
+		<script type="text/javascript" src="bower_components/ocLazyLoad/dist/ocLazyLoad.min.js"></script>
+		
+		<script type="text/javascript" src="public/js/login.js"></script>
 	</body>
 
 </html>

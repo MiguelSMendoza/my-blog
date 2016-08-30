@@ -1,38 +1,45 @@
 (function() {
 	'use strict';
-	var login = angular.module('admin', ['satellizer', 'ngRoute']);
-	login.controller('LoginController', LoginController);
-	login.controller('LogoutController', LogoutController);
+	var app = angular.module('admin', ['satellizer', 'ui.router','oc.lazyLoad']);
+	app.controller('LoginController', LoginController);
+	app.controller('LogoutController', LogoutController);
 	
-	login.config(function($authProvider) {
+	app.config(function($authProvider) {
 		var full = location.protocol+'//'+location.hostname+(location.port ? ':'+location.port: '');
         $authProvider.loginUrl = full + "/auth/login";
         $authProvider.tokenName = "token";
         $authProvider.tokenPrefix = "SMendoza";
     });
     
-    login.config(function($routeProvider, $locationProvider) {
-		$routeProvider.when('/login', {
-			templateUrl: 'private/login.html',
-			controller: 'LoginController'
-		}).when('/private', {
-			templateUrl: 'private/index.html',
-			controller: 'LoginController'
-		}).otherwise({
-			redirectTo: '/'
-		});
+    app.config(function($stateProvider, $urlRouterProvider) {
+	  //
+	  // For any unmatched url, redirect to /state1
+	  $urlRouterProvider.otherwise("/");
+	  //
+	  // Now set up the states
+	  $stateProvider
+	    .state('login', {
+	      url: "/login",
+	      templateUrl: "public/login.html",
+	      controller: 'LoginController'
+	    })
+	    .state('home', {
+	      url: "/home",
+	      templateUrl: "private/views/home.html"
+	    });
 	});
+    
 
-	function LoginController($scope, $auth, $location) {  
+	function LoginController($scope, $auth, $state, $ocLazyLoad) {  
 	    $scope.login = function(){
 	        $auth.login({
 	            email: $scope.email,
 	            password: $scope.password
 	        })
 	        .then(function(){
-		        var url = window.location.href;
-		        var arr = url.split("/");
-	            window.location.replace(arr[0]+"/private?token="+$auth.getToken());
+		        $ocLazyLoad.load('/private/js/app.js');
+		        $ocLazyLoad.load('/private/css/styles.css');
+		        $state.go('home');
 	        })
 	        .catch(function(response){
 	            console.log(response);

@@ -17,7 +17,7 @@ var middleware = require('./app/auth/middleware');
 
 app.use('/public', express.static(path.join(__dirname, '/public')));
 app.use('/bower_components',  express.static( path.join(__dirname, '/bower_components')));
-app.use('/private', middleware.ensureAuthenticated, express.static(__dirname + '/private'));
+app.use('/private', express.static(__dirname + '/private'));
 
 app.use(cors());  
 var entrySchema = new mongoose.Schema({
@@ -52,8 +52,8 @@ app.get('/', function(req, res) {
 var auth = require('./app/auth/auth');
 app.post('/auth/login', auth.emailLogin);
 
-app.get('/login', function(req, res) {
-	res.sendFile('public/login.html', {
+app.get('/admin', function(req, res) {
+	res.sendFile('private/index.html', {
 		root: __dirname
 	});
 });

@@ -4,6 +4,7 @@ var config = require('./config');
 
 module.exports.ensureAuthenticated = function(req, res, next) {  
 
+	console.log(req.headers);
   if(!req.headers.authorization) {
     return res
       .status(403)

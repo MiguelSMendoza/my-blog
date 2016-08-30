@@ -1,24 +1,27 @@
-'use strict';
 (function() {
-	var blog = angular.module('private', ['textAngular', 'ngRoute', 'oc.lazyLoad']);
-	blog.service('EntriesService', EntriesService);
-	blog.controller('EditController', EditController);
-	blog.controller('EntriesController', EntriesController);
-	blog.controller('MainController', MainController);
+	'use strict';
+	var app = angular.module('private', ['textAngular', 'ui.router', 'oc.lazyLoad']);
+	app.service('EntriesService', EntriesService);
+	app.controller('EditController', EditController);
+	app.controller('EntriesController', EntriesController);
+	app.controller('MainController', MainController);
 	
-	blog.config(function($routeProvider) {
-		$routeProvider.when('/', {
-			templateUrl: 'private/views/home.html',
-			controller: 'MainController'
-		}).when('/edit/:idEntry?', {
-			templateUrl: 'private/views/edit.html',
-			controller: 'EditController'
-		}).when('/entries', {
-			templateUrl: 'private/views/entries.html',
-			controller: 'EntriesController'
-		}).otherwise({
-			redirectTo: '/'
-		});
+	app.config(function($stateProvider, $urlRouterProvider) {
+	  //
+	  // For any unmatched url, redirect to /state1
+	  $urlRouterProvider.otherwise("/home");
+	  //
+	  // Now set up the states
+	  $stateProvider
+	    .state('home.edit', {
+	      url: "/edit/:idEntry?",
+	      templateUrl: "private/views/edit.html",
+	      controller: 'EditController'
+	    }).state('home.entries', {
+	      url: "/entries",
+	      templateUrl: "private/views/entries.html",
+	      controller: 'EntriesController'
+	    });
 	});
 
 	function EntriesService($http, $q) {
@@ -76,9 +79,9 @@
 		loadEntries();
 	}
 
-	function EditController($scope, $routeParams, EntriesService) {
-		if($routeParams.idEntry !== undefined) {
-			$scope.idEntry = $routeParams.idEntry;
+	function EditController($scope, $state, EntriesService) {
+		if($state.params.idEntry !== undefined) {
+			$scope.idEntry = $state.params.idEntry;
 			EntriesService.getEntry($scope.idEntry)
 				.then(function(data) {
 					$scope.title=data.title;
