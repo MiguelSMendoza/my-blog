@@ -95,7 +95,7 @@ app.get('/api/entries/:idEntry', function(req, res) {
 		res.json(entry);
 	});
 });
-var port = 8080;
+var port = process.env.PORT | 8080;
 app.listen(port, function() {
 	console.log('Listening on port ' + port + '...');
 });
