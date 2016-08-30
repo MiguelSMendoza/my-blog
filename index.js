@@ -1,8 +1,8 @@
 'use strict';
 require('dotenv').config();
 var express = require('express');
-var path = require('path');
 var bodyParser = require("body-parser");
+var path = require('path');
 var mongoose = require('mongoose');
 var bcrypt = require('bcrypt');
 var cors = require('cors'); 
@@ -14,10 +14,11 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 mongoose.connect(process.env.MONGODB_URI);
 var middleware = require('./app/auth/middleware');
-app.use('/admin', middleware.ensureAuthenticated, express.static(path.join(__dirname, 'admin')));
-app.use('/js', express.static(path.join(__dirname, 'public/js')));
-app.use('/css', express.static(path.join(__dirname, 'public/css')));
-app.use('/vendor', express.static(path.join(__dirname, 'bower_components')));
+
+app.use('/public', express.static(path.join(__dirname, '/public')));
+app.use('/bower_components',  express.static( path.join(__dirname, '/bower_components')));
+app.use('/private', middleware.ensureAuthenticated, express.static(__dirname + '/private'));
+
 app.use(cors());  
 var entrySchema = new mongoose.Schema({
 	title: String,
@@ -51,14 +52,8 @@ app.get('/', function(req, res) {
 var auth = require('./app/auth/auth');
 app.post('/auth/login', auth.emailLogin);
 
-router.get('/admin', middleware.ensureAuthenticated, function(req, res) {
-	res.sendFile('admin/index.html', {
-		root: __dirname
-	});
-});
-
 app.get('/login', function(req, res) {
-	res.sendFile('admin/login.html', {
+	res.sendFile('public/login.html', {
 		root: __dirname
 	});
 });

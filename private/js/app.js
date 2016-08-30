@@ -1,6 +1,6 @@
 'use strict';
 (function() {
-	var blog = angular.module('admin', ['textAngular', 'ngRoute']);
+	var blog = angular.module('private', ['textAngular', 'ngRoute']);
 	blog.service('EntriesService', EntriesService);
 	blog.controller('EditController', EditController);
 	blog.controller('EntriesController', EntriesController);
@@ -8,13 +8,13 @@
 	
 	blog.config(function($routeProvider) {
 		$routeProvider.when('/', {
-			templateUrl: 'admin/views/home.html',
+			templateUrl: 'private/views/home.html',
 			controller: 'MainController'
 		}).when('/edit/:idEntry?', {
-			templateUrl: 'admin/views/edit.html',
+			templateUrl: 'private/views/edit.html',
 			controller: 'EditController'
 		}).when('/entries', {
-			templateUrl: 'admin/views/entries.html',
+			templateUrl: 'private/views/entries.html',
 			controller: 'EntriesController'
 		}).otherwise({
 			redirectTo: '/'
