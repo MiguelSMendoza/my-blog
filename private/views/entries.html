@@ -1,13 +1,13 @@
 <h1 class="page-header">Entradas</h1>
 <div class="content">
-	<a href="#edit/{{entry._id}}" ng-repeat="entry in entries">
-		<div class="row" >
-			<div class="col-xs-6">
-				{{entry.title}}
+		<a ui-sref="home.edit({idEntry: entry._id})" ng-repeat="entry in entries">
+			<div class="row" >
+				<div class="col-xs-6">
+					{{entry.title}}
+				</div>
+				<div class="col-xs-6">
+					{{entry.date}}
+				</div>
 			</div>
-			<div class="col-xs-6">
-				{{entry.date}}
-			</div>
-		</div>
-	</a>
+		</a>
 </div>

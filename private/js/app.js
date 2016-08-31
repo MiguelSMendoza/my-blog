@@ -1,19 +1,23 @@
 (function() {
 	'use strict';
-	var app = angular.module('private', ['textAngular', 'ui.router', 'oc.lazyLoad']);
+	var app = angular.module('admin', ['ui.router', 'oc.lazyLoad']);
 	app.service('EntriesService', EntriesService);
 	app.controller('EditController', EditController);
 	app.controller('EntriesController', EntriesController);
-	app.controller('MainController', MainController);
 	
 	app.config(function($stateProvider, $urlRouterProvider) {
-	  //
-	  // For any unmatched url, redirect to /state1
+
 	  $urlRouterProvider.otherwise("/home");
-	  //
-	  // Now set up the states
-	  $stateProvider
-	    .state('home.edit', {
+
+	  $stateProvider.state('login', {
+	      url: "/login",
+	      templateUrl: "public/login.html",
+	      controller: 'LoginController'
+	    }).state('home', {
+	      url: "/home",
+	      templateUrl: "private/views/home.html", 
+	      controller: "MainController"
+	    }).state('home.edit', {
 	      url: "/edit/:idEntry?",
 	      templateUrl: "private/views/edit.html",
 	      controller: 'EditController'
@@ -51,11 +55,11 @@
 		};
 	}
 
-	function MainController($scope) {
-		$scope.message = "Bienvenido a la Zona de Administración";
-	}
-
-	function EntriesController($scope, EntriesService) {
+	function EntriesController($scope, $auth, EntriesService) {
+		if(!$auth.isAuthenticated()) {
+			$state.go('login');
+			return;
+		} 
 		var months = [
 		  "Enero", "Febrero", "Marzo",
 		  "Abril", "Mayo", "Junio", "Julio",
@@ -79,8 +83,12 @@
 		loadEntries();
 	}
 
-	function EditController($scope, $state, EntriesService) {
-		if($state.params.idEntry !== undefined) {
+	function EditController($scope, $auth, $state, EntriesService) {
+		if(!$auth.isAuthenticated()) {
+			$state.go('login');
+			return;
+		} 
+		if($state.params.idEntry) {
 			$scope.idEntry = $state.params.idEntry;
 			EntriesService.getEntry($scope.idEntry)
 				.then(function(data) {

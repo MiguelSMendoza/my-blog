@@ -67,27 +67,31 @@ app.post('/api/entries', function(req, res) {
 	});
 	if(body.idEntry === 0) {
 		newEntry.save(function(err) {
-			if (err) return handleError(err);
+			if (err) return handleError(res, err);
 			res.json(newEntry);
 		});
 	} else {
 		var query = { '_id':body.idEntry };
 		newEntry._id = body.idEntry;
 		Entry.findOneAndUpdate(query, newEntry, {upsert:true}, function(err, doc){
-		    if (err) return handleError(err);
+		    if (err) return handleError(res, err);
 		    return res.send(newEntry);
 		});
 	}
 });
+function handleError(res, err) {
+	res.status(500);
+	res.render('error', { error: err });
+}
 app.get('/api/entries', function(req, res) {
 	Entry.find(function(err, entries) {
-		if (err) return handleError(err);
+		if (err) return handleError(res, err);
 		res.json(entries);
 	});
 });
 app.get('/api/entries/:idEntry', function(req, res) {
 	Entry.findById(req.params.idEntry, function (err, entry) { 
-		if (err) return handleError(err);
+		if (err) return handleError(res, err);
 		res.json(entry);
 	});
 });
