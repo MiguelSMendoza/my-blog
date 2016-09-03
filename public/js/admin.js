@@ -1,6 +1,6 @@
 (function() {
 	'use strict';
-	var app = angular.module('admin', ['ui.router']);
+	var app = angular.module('admin', ['textAngular', 'satellizer', 'ui.router']);
 	app.service('EntriesService', EntriesService);
 	app.controller('EditController', EditController);
 	app.controller('EntriesController', EntriesController);
@@ -12,7 +12,7 @@
 		if(!$auth.isAuthenticated()) {
 			$state.go('login');
 		} else {
-			$state.go('home');
+			$state.go('home.main');
 		}
 	});
 	
@@ -29,7 +29,7 @@
 	  $stateProvider
 	    .state('login', {
 	      url: "/login",
-	      templateUrl: "public/login.html",
+	      templateUrl: "public/views/login.html",
 	      controller: 'LoginController'
 	    }).state('home', {
 	      url: "/home",
@@ -38,7 +38,7 @@
 	    }).state('home.main', {
 	      url: "/home",
 	      templateUrl: "public/views/main.html",
-	      abstract: true
+	      controller: 'MainController'
 	    }).state('home.edit', {
 	      url: "/edit/:idEntry?",
 	      templateUrl: "public/views/edit.html",
@@ -50,7 +50,7 @@
 	    });
 	});
 	
-	function MainController($scope, $auth, $state, $ocLazyLoad) {
+	function MainController($scope, $auth, $state) {
 		if(!$auth.isAuthenticated()) {
 			$state.go('login');
 			return;
@@ -59,17 +59,18 @@
 			$auth.logout();
 			$state.go('login');
 		};
+		$scope.message = "Bienvenido a la Administración de My Blog";
 	}
     
 
-	function LoginController($scope, $auth, $state, $ocLazyLoad) {  
+	function LoginController($scope, $auth, $state) {  
 	    $scope.login = function(){
 	        $auth.login({
 	            email: $scope.email,
 	            password: $scope.password
 	        })
 	        .then(function(){
-		        $state.go('home');
+		        $state.go('home.main');
 	        })
 	        .catch(function(response){
 	            console.log(response);
